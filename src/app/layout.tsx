@@ -4,6 +4,7 @@ import Footer from "@/src/components/template/LayoutDefault/Partials/Footer";
 import ModalComponent from "@/src/components/template/LayoutDefault/Partials/Modal";
 import { Inter } from "next/font/google";
 import "@/assets/styles/globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +23,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="antialiased min-h-screen flex flex-col">
         <ModalProvider>
           <Header />
-          <main className="flex-grow pb-12">{children}</main>
+          <main className="flex-grow pb-12">
+            {children}
+            <Analytics />
+          </main>
           <Footer />
           <ModalComponent />
         </ModalProvider>
