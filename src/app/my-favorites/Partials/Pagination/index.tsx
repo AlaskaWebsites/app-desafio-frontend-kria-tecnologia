@@ -54,15 +54,18 @@ const Pagination = ({
               className="border p-4 cursor-pointer" // Adicionando a interação de clique
               onClick={() => handleItemClick(item)} // Abrindo o modal ao clicar
             >
-              <h3>{item.name}</h3>
-              <p>{item.description || "Sem descrição disponível"}</p>
-              <p>
+              <h3 className="truncate">{item.name}</h3>
+              <p className="truncate">
+                {item.description || "Sem descrição disponível"}
+              </p>
+              <p className="truncate">
                 <strong>Linguagem:</strong>{" "}
                 {item.languages_url ? (
                   <a
                     href={item.languages_url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="truncate"
                   >
                     {item.languages_url}
                   </a>
@@ -70,13 +73,13 @@ const Pagination = ({
                   "Não disponível"
                 )}
               </p>
-              <p>
+              <p className="truncate">
                 <strong>Última atualização:</strong>{" "}
                 {item.updated_at && !isNaN(new Date(item.updated_at).getTime())
                   ? new Date(item.updated_at).toLocaleDateString()
                   : "Não disponível"}
               </p>
-              <p>
+              <p className="truncate">
                 <strong>Dono:</strong> {item.owner.login}
               </p>
             </div>
