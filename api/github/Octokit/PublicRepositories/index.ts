@@ -17,8 +17,12 @@ const getPublicRepositories = async (perPage = 10, since = 0) => {
       data,
       nextSince: data.length > 0 ? data[data.length - 1]?.id || null : null,
     };
-  } catch (error) {
-    console.error("Erro ao buscar repositórios:", error.message || error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro ao buscar repositórios:", error.message);
+    } else {
+      console.error("Erro ao buscar repositórios:", error);
+    }
     return { data: [], nextSince: null };
   }
 };
