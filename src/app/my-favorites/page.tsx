@@ -1,51 +1,54 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useModal } from "@/src/app/context/ModalContext"; // Usando o hook do ModalContext
-import Pagination from "./Partials/Pagination"; // O componente de paginação
+import { useModal } from "@/src/app/context/ModalContext";
+import Pagination from "./Partials/Pagination";
+
+interface Repository {
+  id: number;
+  name: string;
+  description?: string;
+  languages_url?: string;
+  updated_at?: string;
+  owner: {
+    login: string;
+  };
+}
 
 const MyFavorites = () => {
-  const { selectedItem } = useModal(); // Acessando o item selecionado do contexto
-  const [repositories, setRepositories] = useState<any[]>([]); // Lista de repositórios (ou favoritos)
-  const [loading, setLoading] = useState(false); // Indicador de carregamento
-  const [error, setError] = useState<string | null>(null); // Estado de erro
-  const [page, setPage] = useState(1); // Página atual
-  const [nextPage, setNextPage] = useState<number | null>(null); // Página seguinte (para paginação)
+  const { selectedItem } = useModal();
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [nextPage, setNextPage] = useState<number | null>(null);
 
-  // Carrega os dados do contexto e atualiza o estado de repositórios
   useEffect(() => {
     if (selectedItem) {
       setLoading(true);
       setError(null);
 
       try {
-        // Tenta obter dados do localStorage
         const dataFromLocalStorage = JSON.parse(
           localStorage.getItem("my-favorites") || "[]"
         );
 
-        // Filtra ou usa diretamente os dados obtidos
         setRepositories(dataFromLocalStorage);
-
-        // Verifica se existem mais de 10 itens para habilitar a próxima página
         setNextPage(dataFromLocalStorage.length > 10 ? 2 : null);
-
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Erro ao carregar os favoritos.");
         setLoading(false);
       }
-    } else {
-      console.log("Nenhum item selecionado");
     }
-  }, [selectedItem]); // Recarrega os dados sempre que o selectedItem mudar
+  }, [selectedItem]);
 
   const handleNext = useCallback(() => {
-    if (nextPage) setPage(nextPage); // Avança para a próxima página
+    if (nextPage) setPage(nextPage);
   }, [nextPage]);
 
   const handlePrevious = useCallback(() => {
-    if (page > 1) setPage((prevPage) => prevPage - 1); // Retrocede para a página anterior
+    if (page > 1) setPage((prevPage) => prevPage - 1);
   }, [page]);
 
   return (
@@ -56,7 +59,7 @@ const MyFavorites = () => {
       {error && <p className="text-red-500">{error}</p>}
 
       <Pagination
-        items={repositories} // Passa os itens de favoritos para a paginação
+        items={repositories}
         onNext={handleNext}
         onPrevious={handlePrevious}
         loading={loading}

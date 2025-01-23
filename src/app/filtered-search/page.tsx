@@ -3,17 +3,24 @@
 import { useState, useEffect, useCallback } from "react";
 import { searchRepositories } from "@/api/github/Octokit/filtered-search";
 import Pagination from "./Partials/Pagination";
-//ultima page criada junto o chatgpt(meu amorzinho)
+
+interface Repository {
+  id: number;
+  name: string;
+  // Add other repository properties as needed
+}
 
 const FilteredSearch = () => {
-  const [repositories, setRepositories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [nextPage, setNextPage] = useState(null);
-  const [sortBy, setSortBy] = useState("stars");
-  const [direction, setDirection] = useState("desc");
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [nextPage, setNextPage] = useState<number | null>(null);
+  const [sortBy] = useState<
+    "stars" | "updated" | "forks" | "help-wanted-issues"
+  >("stars");
+  const [direction] = useState<"desc" | "asc">("desc");
 
   const fetchRepositories = async () => {
     if (!query) return;
@@ -37,7 +44,7 @@ const FilteredSearch = () => {
 
       if (response.data.length > 0) {
         setRepositories(response.data);
-        setNextPage(response.nextPage);
+        setNextPage(response.nextPage ? parseInt(response.nextPage, 10) : null);
       } else {
         setError("Nenhum repositório encontrado.");
       }
