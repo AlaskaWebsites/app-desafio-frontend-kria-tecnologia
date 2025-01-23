@@ -28,9 +28,9 @@ const Pagination = ({
             <div
               onClick={() => handleItemClick(item)}
               key={item.id}
-              className="border p-4 text-[rgb(17_24_39)] flex justify-between items-center"
+              className="border p-4 text-[rgb(17_24_39)] flex justify-between items-center cursor-pointer"
             >
-              <div className="cursor-pointer">
+              <div>
                 <h3 className="text-[rgb(17_24_39)]">{item.name}</h3>
                 <p className="text-[rgb(17_24_39)]">
                   {item.description || "Sem descrição disponível"}

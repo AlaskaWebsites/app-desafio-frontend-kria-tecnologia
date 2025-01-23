@@ -27,7 +27,7 @@ const Pagination = ({
           items.map((item) => (
             <div
               key={item.id}
-              className="border p-4 text-[rgb(17_24_39)]"
+              className="border p-4 text-[rgb(17_24_39)] cursor-pointer" // Adicionando cursor-pointer aqui
               onClick={() => handleItemClick(item)} // Chama o handleItemClick ao clicar
             >
               <h3 className="text-[rgb(17_24_39)]">{item.name}</h3>
