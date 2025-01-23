@@ -16,11 +16,7 @@ export const metadata = {
   description: "Desafio Frontend Kria Tecnologia",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="pt-br" className={inter.variable}>
       <body className="antialiased">
@@ -33,4 +29,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

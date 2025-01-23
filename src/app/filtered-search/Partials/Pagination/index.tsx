@@ -1,7 +1,23 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { useModal } from "@/src/app/context/ModalContext"; // Importe o hook de contexto do modal
+import { useModal } from "@/src/app/context/ModalContext"; // Adicionando o contexto do modal
 
-const Pagination = ({
+interface Repository {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+interface PaginationProps {
+  items: Repository[];
+  onNext: () => void;
+  onPrevious: () => void;
+  loading: boolean;
+  disablePrevious: boolean;
+  currentPage: number;
+  disableNext: boolean;
+}
+
+const Pagination: React.FC<PaginationProps> = ({
   items = [],
   onNext,
   onPrevious,
@@ -10,10 +26,11 @@ const Pagination = ({
   currentPage,
   disableNext,
 }) => {
-  const { openModal } = useModal(); // Função para abrir o modal
+  const { openModal } = useModal(); // Pegando a função openModal do contexto
 
-  const handleItemClick = (item) => {
-    openModal(item); // Abre o modal passando o item
+  const handleItemClick = (item: Repository) => {
+    // Função que abre o modal passando o item clicado
+    openModal(item); // Passando o objeto Repository completo
   };
 
   return (
@@ -27,8 +44,8 @@ const Pagination = ({
           items.map((item) => (
             <div
               key={item.id}
-              className="border p-4 cursor-pointer"
-              onClick={() => handleItemClick(item)} // Adiciona o clique para abrir o modal
+              className="border p-4 cursor-pointer" // Adicionando a interação de clique
+              onClick={() => handleItemClick(item)} // Abrindo o modal ao clicar
             >
               <h3>{item.name}</h3>
               <p>{item.description || "Sem descrição disponível"}</p>

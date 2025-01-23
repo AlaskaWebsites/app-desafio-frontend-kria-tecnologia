@@ -4,14 +4,22 @@ import { useCallback, useEffect, useState } from "react";
 import Pagination from "./Partials/Pagination";
 import { getUserRepositories } from "@/api/github/Octokit/ListRepositoriesForTheAuthenticatedUser";
 
+interface Repository {
+  id: number;
+  name: string;
+  description?: string;
+}
+
 const MyRepositories = () => {
-  const [repositories, setRepositories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [nextPage, setNextPage] = useState(null);
-  const [sortBy, setSortBy] = useState("full_name");
-  const [direction, setDirection] = useState("desc");
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [nextPage, setNextPage] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<
+    "full_name" | "updated" | "created" | "pushed"
+  >("full_name");
+  const [direction, setDirection] = useState<"desc" | "asc">("desc");
   const username = "alaskawebsites"; // Nome de usuário do GitHub
 
   useEffect(() => {
@@ -30,11 +38,13 @@ const MyRepositories = () => {
 
         if (response.data.length > 0) {
           setRepositories(response.data);
-          setNextPage(response.nextPage);
+          setNextPage(
+            response.nextPage ? parseInt(response.nextPage, 10) : null
+          );
         } else {
           setError("Nenhum repositório encontrado.");
         }
-      } catch (err) {
+      } catch {
         setError("Erro ao carregar os repositórios.");
       } finally {
         setLoading(false);
@@ -56,11 +66,13 @@ const MyRepositories = () => {
     }
   }, [page]);
 
-  const handleSortChange = (newSortBy) => {
+  const handleSortChange = (
+    newSortBy: "full_name" | "updated" | "created" | "pushed"
+  ) => {
     setSortBy(newSortBy); // Atualiza o critério de ordenação
   };
 
-  const handleDirectionChange = (newDirection) => {
+  const handleDirectionChange = (newDirection: "desc" | "asc") => {
     setDirection(newDirection); // Atualiza a direção de ordenação
   };
 

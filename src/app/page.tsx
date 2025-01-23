@@ -1,4 +1,4 @@
-export default function Home() {
+const Home = () => {
   return (
     <div className="flex items-center justify-center min-h-[90vh] bg-gradient-to-br from-gray-800 via-gray-900 to-gray-950">
       <div className="text-center p-8 bg-gray-100 shadow-xl rounded-xl max-w-lg">
@@ -9,4 +9,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;

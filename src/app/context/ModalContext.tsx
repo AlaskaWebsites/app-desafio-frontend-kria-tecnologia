@@ -9,11 +9,17 @@ import {
   ReactNode,
 } from "react";
 
+interface Repository {
+  id: number;
+  name: string;
+  description?: string;
+}
+
 interface ModalContextType {
   isModalOpen: boolean;
-  selectedItem: string | null;
+  selectedItem: Repository | null;
   modalType: string | null;
-  openModal: (item: string, type?: string) => void;
+  openModal: (item: Repository, type?: string) => void;
   closeModal: () => void;
 }
 
@@ -21,13 +27,12 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<Repository | null>(null);
   const [modalType, setModalType] = useState<string | null>(null);
 
   useEffect(() => {
     const savedItem = localStorage.getItem("selectedItem");
     if (savedItem) {
-      // Tenta converter de volta para objeto, se possível
       try {
         setSelectedItem(JSON.parse(savedItem));
       } catch (error) {
@@ -38,12 +43,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (selectedItem) {
-      // Salva como JSON string
       localStorage.setItem("selectedItem", JSON.stringify(selectedItem));
     }
   }, [selectedItem]);
 
-  const openModal = useCallback((item: string, type: string = "") => {
+  const openModal = useCallback((item: Repository, type: string = "") => {
     setSelectedItem(item);
     setModalType(type);
     setIsModalOpen(true);

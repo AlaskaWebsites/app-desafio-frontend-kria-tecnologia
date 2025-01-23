@@ -1,11 +1,11 @@
 import octokit from "@/api/github";
 
 const searchRepositories = async (
-  query, // Nome ou parte do nome do repositório
+  query: string, // Nome ou parte do nome do repositório
   perPage = 10,
   page = 1,
-  sortBy = "stars", // Ou outro critério como "updated"
-  direction = "desc"
+  sortBy: "stars" | "updated" | "forks" | "help-wanted-issues" = "stars", // Ou outro critério como "updated"
+  direction: "desc" | "asc" = "desc"
 ) => {
   try {
     const response = await octokit.request("GET /search/repositories", {
@@ -35,7 +35,11 @@ const searchRepositories = async (
 
     return { data: data.items, nextPage };
   } catch (error) {
-    console.error("Erro ao buscar repositórios:", error.message || error);
+    if (error instanceof Error) {
+      console.error("Erro ao buscar repositórios:", error.message);
+    } else {
+      console.error("Erro ao buscar repositórios:", error);
+    }
     return { data: [], nextPage: null };
   }
 };

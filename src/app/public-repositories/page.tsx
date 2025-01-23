@@ -4,12 +4,20 @@ import Pagination from "./Partials/Pagination";
 import { getPublicRepositories } from "@/api/github/Octokit/PublicRepositories";
 import { useEffect, useState } from "react";
 
+interface Repository {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+  // Adicione outras propriedades conforme necessário
+}
+
 const PublicRepositories = () => {
-  const [repositories, setRepositories] = useState([]);
-  const [since, setSince] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1); // Adiciona uma variável de página
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [since, setSince] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchRepositories = async () => {
@@ -24,7 +32,7 @@ const PublicRepositories = () => {
         } else {
           setError("Nenhum repositório encontrado.");
         }
-      } catch (err) {
+      } catch {
         setError("Erro ao carregar os repositórios.");
       } finally {
         setLoading(false);
@@ -38,15 +46,13 @@ const PublicRepositories = () => {
     if (repositories.length > 0) {
       const nextSince = repositories[repositories.length - 1]?.id;
       setSince(nextSince);
-      setPage((prevPage) => prevPage + 1); // Incrementa a página
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
   const handlePrevious = () => {
     if (page > 1) {
-      setPage((prevPage) => prevPage - 1); // Decrementa a página
-      // Lógica de retroceder o "since" aqui (dependendo da API)
-      // A API não suporta navegação reversa, então você pode não conseguir implementar completamente isso sem alterações na API
+      setPage((prevPage) => prevPage - 1);
       alert("A API não suporta navegação reversa.");
     }
   };
@@ -61,10 +67,10 @@ const PublicRepositories = () => {
         <Pagination
           items={repositories}
           onNext={handleNext}
-          onPrevious={handlePrevious} // Passa a função handlePrevious
+          onPrevious={handlePrevious}
           loading={loading}
-          disablePrevious={page === 1} // Desabilita o botão "Previous" na primeira página
-          currentPage={page} // Usa a variável de página
+          disablePrevious={page === 1}
+          currentPage={page}
         />
       </div>
     </div>

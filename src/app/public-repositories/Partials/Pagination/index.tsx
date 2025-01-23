@@ -3,7 +3,16 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useModal } from "@/src/app/context/ModalContext";
 
-const Pagination = ({
+interface PaginationProps {
+  items: { id: number; name: string; description?: string }[];
+  onNext: () => void;
+  onPrevious: () => void;
+  loading: boolean;
+  disablePrevious: boolean;
+  currentPage: number;
+}
+
+const Pagination: React.FC<PaginationProps> = ({
   items = [],
   onNext,
   onPrevious,
@@ -13,7 +22,11 @@ const Pagination = ({
 }) => {
   const { openModal } = useModal(); // Pega a função openModal do contexto
 
-  const handleItemClick = (item: string) => {
+  const handleItemClick = (item: {
+    id: number;
+    name: string;
+    description?: string;
+  }) => {
     // Ao clicar no item, abre o modal e passa o item para o estado
     openModal(item);
   };

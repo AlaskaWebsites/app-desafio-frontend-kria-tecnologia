@@ -1,7 +1,23 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useModal } from "@/src/app/context/ModalContext";
 
-const Pagination = ({
+interface Item {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+interface PaginationProps {
+  items: Item[];
+  onNext: () => void;
+  onPrevious: () => void;
+  loading: boolean;
+  disablePrevious: boolean;
+  currentPage: number;
+  disableNext: boolean;
+}
+
+const Pagination: React.FC<PaginationProps> = ({
   items = [],
   onNext,
   onPrevious,
@@ -12,7 +28,7 @@ const Pagination = ({
 }) => {
   const { openModal } = useModal();
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item: Item) => {
     openModal(item); // Abre o modal com os detalhes do item
   };
 
