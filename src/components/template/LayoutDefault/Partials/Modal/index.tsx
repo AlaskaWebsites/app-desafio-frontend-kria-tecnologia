@@ -10,6 +10,12 @@ import {
 } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/24/outline";
 
+type Repository = {
+  id: string;
+  name: string;
+  description: string;
+};
+
 const ModalComponent = () => {
   const { isModalOpen, closeModal, selectedItem } = useModal();
   const [isFavorited, setIsFavorited] = useState(false);
@@ -17,11 +23,11 @@ const ModalComponent = () => {
   useEffect(() => {
     if (isModalOpen && selectedItem) {
       // Verifica se o item já está nos favoritos ao abrir o modal
-      const myFavorites = JSON.parse(
+      const myFavorites: Repository[] = JSON.parse(
         localStorage.getItem("my-favorites") || "[]"
       );
       const isInFavorites = myFavorites.some(
-        (item: any) => item.id === selectedItem.id
+        (item: Repository) => item.id === selectedItem?.id.toString()
       );
       setIsFavorited(isInFavorites);
     }
@@ -35,21 +41,27 @@ const ModalComponent = () => {
   }, [isModalOpen, selectedItem]);
 
   const handleFavoriteClick = () => {
-    const myFavorites = JSON.parse(
+    const myFavorites: Repository[] = JSON.parse(
       localStorage.getItem("my-favorites") || "[]"
     );
 
     // Adiciona ou remove o item dos favoritos
     if (isFavorited) {
       const updatedFavorites = myFavorites.filter(
-        (item: any) => item.id !== selectedItem?.id
+        (item: Repository) => item.id !== selectedItem?.id?.toString()
       );
       localStorage.setItem("my-favorites", JSON.stringify(updatedFavorites));
       setIsFavorited(false);
     } else {
-      myFavorites.push(selectedItem);
-      localStorage.setItem("my-favorites", JSON.stringify(myFavorites));
-      setIsFavorited(true);
+      if (selectedItem) {
+        myFavorites.push({
+          ...selectedItem,
+          id: selectedItem.id.toString(),
+          description: selectedItem.description || "",
+        });
+        localStorage.setItem("my-favorites", JSON.stringify(myFavorites));
+        setIsFavorited(true);
+      }
     }
   };
 
