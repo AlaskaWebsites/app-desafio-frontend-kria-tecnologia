@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { useModal } from "@/src/app/context/ModalContext"; // Importe o hook de contexto do modal
 
 interface PaginationProps {
   items: any[];
@@ -21,6 +22,12 @@ const Pagination = ({
   currentPage,
   disableNext,
 }: PaginationProps) => {
+  const { openModal } = useModal(); // Função para abrir o modal
+
+  const handleItemClick = (item: any) => {
+    openModal(item); // Abre o modal passando o item
+  };
+
   return (
     <div className="flex flex-col">
       <div className="space-y-4 text-[rgb(17_24_39)]">
@@ -30,7 +37,11 @@ const Pagination = ({
           </div>
         ) : items.length > 0 ? (
           items.map((item) => (
-            <div key={item.id} className="border p-4">
+            <div
+              key={item.id}
+              className="border p-4 cursor-pointer"
+              onClick={() => handleItemClick(item)} // Adiciona o clique para abrir o modal
+            >
               <h3>{item.name}</h3>
               <p>{item.description || "Sem descrição disponível"}</p>
               {/* Linguagem */}
