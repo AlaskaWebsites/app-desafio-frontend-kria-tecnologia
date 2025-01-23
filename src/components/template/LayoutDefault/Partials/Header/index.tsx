@@ -5,8 +5,8 @@ import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
-const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const Header: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
     <header className="bg-white">
