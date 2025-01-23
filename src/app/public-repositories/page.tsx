@@ -58,20 +58,22 @@ const PublicRepositories = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-white shadow-lg rounded-lg m-6">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-        Repositórios Públicos
-      </h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="space-y-4">
-        <Pagination
-          items={repositories}
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          loading={loading}
-          disablePrevious={page === 1}
-          currentPage={page}
-        />
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 bg-white shadow-lg rounded-lg m-2 xs:m-6 sm:m-6 lg:m-6">
+        <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800 mb-4">
+          Repositórios Públicos
+        </h2>
+        {error && <p className="text-red-500">{error}</p>}
+        <div className="space-y-4">
+          <Pagination
+            items={repositories}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            loading={loading}
+            disablePrevious={page === 1}
+            currentPage={page}
+          />
+        </div>
       </div>
     </div>
   );

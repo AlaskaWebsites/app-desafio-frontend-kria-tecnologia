@@ -83,40 +83,40 @@ const MyRepositories = () => {
       </h2>
       {error && <p className="text-red-500">{error}</p>}
       <div className="space-y-4 text-[rgb(17_24_39)]">
-        <div className="flex justify-center gap-4 mb-4">
+        <div className="flex flex-wrap justify-center gap-2 mb-4">
           <button
             onClick={() => handleSortChange("created")}
-            className="text-center"
+            className="px-4 py-2 border rounded-md text-sm"
           >
             Ordenar por Data de Criação
           </button>
           <button
             onClick={() => handleSortChange("updated")}
-            className="text-center"
+            className="px-4 py-2 border rounded-md text-sm"
           >
             Ordenar por Última Atualização
           </button>
           <button
             onClick={() => handleSortChange("pushed")}
-            className="text-center"
+            className="px-4 py-2 border rounded-md text-sm"
           >
             Ordenar por Último Push
           </button>
           <button
             onClick={() => handleSortChange("full_name")}
-            className="text-center"
+            className="px-4 py-2 border rounded-md text-sm"
           >
             Ordenar por Nome
           </button>
           <button
             onClick={() => handleDirectionChange("desc")}
-            className="text-center"
+            className="px-4 py-2 border rounded-md text-sm"
           >
             Ordem Decrescente
           </button>
           <button
             onClick={() => handleDirectionChange("asc")}
-            className="text-center"
+            className="px-4 py-2 border rounded-md text-sm"
           >
             Ordem Crescente
           </button>

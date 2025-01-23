@@ -22,7 +22,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="antialiased min-h-screen flex flex-col">
         <ModalProvider>
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow pb-12">{children}</main>
           <Footer />
           <ModalComponent />
         </ModalProvider>
