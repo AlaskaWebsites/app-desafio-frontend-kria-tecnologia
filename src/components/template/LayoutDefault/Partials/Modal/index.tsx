@@ -64,7 +64,7 @@ const ModalComponent = () => {
         aria-hidden="true"
       />
       <div className="fixed inset-0 z-10 flex items-center justify-center p-4">
-        <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:max-w-lg sm:w-full">
+        <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl">
           <div className="relative bg-white px-4 py-5 sm:p-6">
             {/* Estrela no canto superior direito */}
             <button
