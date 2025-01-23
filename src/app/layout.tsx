@@ -19,10 +19,10 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="pt-br" className={inter.variable}>
-      <body className="antialiased">
+      <body className="antialiased min-h-screen flex flex-col">
         <ModalProvider>
           <Header />
-          <main>{children}</main>
+          <main className="flex-grow">{children}</main>
           <Footer />
           <ModalComponent />
         </ModalProvider>
